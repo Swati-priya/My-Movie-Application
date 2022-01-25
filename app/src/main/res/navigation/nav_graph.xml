@@ -37,5 +37,8 @@
         <action
             android:id="@+id/action_favoriteFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <argument
+            android:name="favMovies"
+            app:argType="com.example.mymovieapplication.room.FavoriteMovie" />
     </fragment>
 </navigation>

@@ -1,57 +1,54 @@
 package com.example.mymovieapplication.adaptor
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import coil.load
 import com.example.mymovieapplication.databinding.ItemMovieBinding
 import com.example.mymovieapplication.room.FavoriteMovie
 
 class FavoriteAdaptor : RecyclerView.Adapter<FavoriteAdaptor.FavoriteViewHolder>() {
+    inner class FavoriteViewHolder(val binding: ItemMovieBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-    private lateinit var list: List<FavoriteMovie>
+    private val diffCallback = object : DiffUtil.ItemCallback<FavoriteMovie>() {
+        override fun areItemsTheSame(oldItem: FavoriteMovie, newItem: FavoriteMovie): Boolean {
+            return oldItem.id_movie == newItem.id_movie
+        }
 
-    private var onItemClickCallback: OnItemClickCallback? = null
-
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
+        override fun areContentsTheSame(oldItem: FavoriteMovie, newItem: FavoriteMovie): Boolean {
+            return oldItem == newItem
+        }
     }
 
-    fun setMovieList(list: List<FavoriteMovie>) {
-        this.list = list
-        notifyDataSetChanged()
+    private val differ = AsyncListDiffer(this, diffCallback)
+    var movie: List<FavoriteMovie>
+        get() = differ.currentList
+        set(value) {
+            differ.submitList(value)
+        }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
+        return FavoriteViewHolder(
+            ItemMovieBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
+        )
     }
 
-    inner class FavoriteViewHolder(private val binding: ItemMovieBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(favoriteMovie: FavoriteMovie) {
-            with(binding) {
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
+        val currMovie = movie[position]
 
-                Glide.with(itemView)
-                    .load("${favoriteMovie.baseUrl}${favoriteMovie.poster_path}")
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .into(ivMoviePoster)
-                tvMovieTitle.text = favoriteMovie.original_title
-                binding.root.setOnClickListener { onItemClickCallback?.onItemClick(favoriteMovie) }
+        holder.binding.apply {
+            movieTitle.text = currMovie.original_title
+            moviePoster.load("https://image.tmdb.org/t/p/w342/" + currMovie.poster_path) {
+                crossfade(true)
+                crossfade(1000)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavoriteViewHolder(binding)
-    }
-
-    override fun getItemCount(): Int = list.size
-
-    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        Log.e("adapter", "Masuk bind view holder")
-        holder.bind(list[position])
-    }
-
-    interface OnItemClickCallback {
-        fun onItemClick(favoriteMovie: FavoriteMovie)
-    }
+    override fun getItemCount() = movie.size
 }

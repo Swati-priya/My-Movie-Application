@@ -4,15 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/favorite_toggle.xml" value="0.8464285714285714" />
+        <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/drawable/ic_favorite_black.xml" value="0.21944444444444444" />
         <entry key="app/src/main/res/drawable/ic_favorite_red.xml" value="0.21944444444444444" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2740740740740741" />
+        <entry key="app/src/main/res/drawable/ic_movie.xml" value="0.1537037037037037" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.128125" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_favorite.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_top_rated.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/item_movie.xml" value="0.27685185185185185" />
         <entry key="app/src/main/res/layout/movie_layout_adaptor.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_search.xml" value="0.18020833333333333" />
       </map>
     </option>
   </component>

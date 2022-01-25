@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovieapplication.R
 import com.example.mymovieapplication.adaptor.FavoriteAdaptor
 import com.example.mymovieapplication.databinding.FragmentFavoriteBinding
-import com.example.mymovieapplication.room.FavoriteMovie
 import com.example.mymovieapplication.viewmodel.FavoriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,6 +18,7 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
     private val viewModel by viewModels<FavoriteViewModel>()
     private var _binding: FragmentFavoriteBinding? = null
     private val binding get() = _binding!!
+    private lateinit var favoriteAdaptor: FavoriteAdaptor
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,27 +36,22 @@ class FavoriteFragment : Fragment(R.layout.fragment_favorite) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentFavoriteBinding.bind(view)
+        setUpFavRecyclerView()
+    }
 
-        val adapter = FavoriteAdaptor()
-
-        viewModel.movies.observe(viewLifecycleOwner) {
-            adapter.setMovieList(it)
-            binding.apply {
-                rvMovie.setHasFixedSize(true)
-                rvMovie.adapter = adapter
-            }
+    private fun setUpFavRecyclerView() {
+        favoriteAdaptor = FavoriteAdaptor()
+        binding.recyclerView1.apply {
+            layoutManager = GridLayoutManager(activity, 2)
+            setHasFixedSize(true)
+            adapter = favoriteAdaptor
         }
 
-        adapter.setOnItemClickCallback(object : FavoriteAdaptor.OnItemClickCallback {
-            override fun onItemClick(favoriteMovie: FavoriteMovie) {
-                /*val movie = Movieitem(
-                    favoriteMovie.id_movie,
-                    favoriteMovie.overview,
-                    favoriteMovie.poster_path,
-                    favoriteMovie.original_title
-                )*/
+        viewModel.movies.observe(
+            requireActivity(),
+            { response ->
+                favoriteAdaptor.movie = response
             }
-        })
+        )
     }
 }

@@ -24,7 +24,6 @@ object AppModule {
         Retrofit.Builder().baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build().create(ApiService::class.java)
-
     @Provides
     @Singleton
     fun provideFavMovieDatabase(

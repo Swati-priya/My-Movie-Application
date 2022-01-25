@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mymovieapplication.models.MoviesResponse
 import com.example.mymovieapplication.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +24,7 @@ class MovieViewModel
         getMovie()
     }
 
-    private fun getMovie() = viewModelScope.launch {
+    private fun getMovie() = viewModelScope.launch(Dispatchers.IO) {
 
         repository.getMovie().let { response ->
             if (response.isSuccessful) {

@@ -62,8 +62,10 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
             tvDetails.text = movie.overview
 
             var _isChecked = false
-            CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.Main).launch {
+
                 val count = viewModel.checkMovie(movie.id.toString())
+
                 withContext(Main) {
                     if (count > 0) {
                         toggleFavorite.isChecked = true
@@ -73,21 +75,21 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
                         _isChecked = false
                     }
                 }
-            }
 
-            toggleFavorite.setOnClickListener {
-                _isChecked = !_isChecked
-                if (_isChecked) {
-                    viewModel.addToFavorite(movie)
-                } else {
-                    viewModel.removeFromFavorite(movie.id.toString())
+                toggleFavorite.setOnClickListener {
+                    _isChecked = !_isChecked
+                    if (_isChecked) {
+                        viewModel.addToFavorite(movie)
+                    } else {
+                        viewModel.removeFromFavorite(movie.id.toString())
+                    }
+                    toggleFavorite.isChecked = _isChecked
                 }
-                toggleFavorite.isChecked = _isChecked
-            }
 
-            imageViewDetail.load("https://image.tmdb.org/t/p/w342/" + movie.poster_path) {
-                crossfade(true)
-                crossfade(1000)
+                imageViewDetail.load("https://image.tmdb.org/t/p/w342/" + movie.poster_path) {
+                    crossfade(true)
+                    crossfade(1000)
+                }
             }
         }
     }

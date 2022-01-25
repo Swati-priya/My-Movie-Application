@@ -15,6 +15,6 @@ data class FavoriteMovie(
     val poster_path: String
 ) : Serializable, Parcelable {
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
+    var id: Int = 0
     val baseUrl get() = "https://image.tmdb.org/t/p/w342"
 }
