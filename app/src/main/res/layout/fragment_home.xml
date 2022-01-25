@@ -18,6 +18,12 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:visibility="gone"/>
+        <Button
+            android:id="@+id/favButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Click to see your Favorite Movies !!"
+            tools:ignore="HardcodedText" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

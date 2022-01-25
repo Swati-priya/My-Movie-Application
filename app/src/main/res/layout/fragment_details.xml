@@ -207,13 +207,6 @@
 
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/topRatedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Click to see Top-Rated Movies !!"
-                    tools:ignore="HardcodedText" />
-
             </LinearLayout>
 
         </ScrollView>
