@@ -1,11 +1,11 @@
 package com.example.mymovieapplication.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import androidx.fragment.app.viewModels
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mymovieapplication.R
 import com.example.mymovieapplication.adaptor.MovieAdaptor
@@ -19,13 +19,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MovieViewModel by viewModels()
-    private  lateinit var movieAdaptor: MovieAdaptor
+    private lateinit var movieAdaptor: MovieAdaptor
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
@@ -33,15 +34,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onDestroy()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setUpRv()
-
+        setUpRecyclerView()
     }
 
-    private fun setUpRv() {
-
+    private fun setUpRecyclerView() {
         movieAdaptor = MovieAdaptor()
         binding.recyclerView.apply {
             layoutManager = GridLayoutManager(activity, 2)
@@ -49,11 +48,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             adapter = movieAdaptor
         }
 
-
-        viewModel.moviesResponse.observe(requireActivity(),
+        viewModel.moviesResponse.observe(
+            requireActivity(),
             { response ->
                 movieAdaptor.movie = response.results
-            })
-
+            }
+        )
     }
 }

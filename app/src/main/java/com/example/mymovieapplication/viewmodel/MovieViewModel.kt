@@ -13,12 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieViewModel
-@Inject constructor(private val repository: MovieRepository)
-    :ViewModel(){
+@Inject constructor(private val repository: MovieRepository) : ViewModel() {
 
     private val _response = MutableLiveData<MoviesResponse>()
-    val moviesResponse:LiveData<MoviesResponse>
-    get()= _response
+    val moviesResponse: LiveData<MoviesResponse>
+        get() = _response
 
     init {
         getMovie()
@@ -27,10 +26,10 @@ class MovieViewModel
     private fun getMovie() = viewModelScope.launch {
 
         repository.getMovie().let { response ->
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 _response.postValue(response.body())
-            }else{
-                Log.d("tag","getMovie Error: ${response.code()}")
+            } else {
+                Log.d("tag", "getMovie Error: ${response.code()}")
             }
         }
     }
