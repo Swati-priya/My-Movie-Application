@@ -19,4 +19,4 @@ data class Movieitem(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-):Parcelable
+) : Parcelable
