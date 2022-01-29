@@ -40,7 +40,6 @@ class FavoriteAdaptor : RecyclerView.Adapter<FavoriteAdaptor.FavoriteViewHolder>
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         val currMovie = movie[position]
-
         holder.binding.apply {
             movieTitle.text = currMovie.original_title
             moviePoster.load("https://image.tmdb.org/t/p/w342/" + currMovie.poster_path) {
