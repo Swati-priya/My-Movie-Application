@@ -25,6 +25,8 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
     private val args: DetailsFragmentArgs by navArgs()
+
+    // initalizing detailviewmodel lazily which internally call viewmodelprovider factory
     private val viewModel: DetailsViewModel by viewModels()
 
     private lateinit var movie: Movieitem
